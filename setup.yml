@@ -21,6 +21,13 @@
   - name: Update apt and install docker-ce
     apt: update_cache=yes name=docker-ce state=latest
 
+  - name: users | adding docker users (for use without sudo)
+    user:
+      name: "ubuntu"
+      append: yes
+      groups: docker
+    become: true
+
   - name: Install Docker Module for Python
     pip:
       name: docker
