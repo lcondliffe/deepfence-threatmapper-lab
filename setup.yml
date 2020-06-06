@@ -34,14 +34,18 @@
       name: docker
 ## Docker Compose Installation
   - name: Install docker-compose
-    remote_user: ubuntu
-    get_url: 
-      url : https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-Linux-x86_64
-      dest: /usr/local/bin/docker-compose
-      mode: 'u+x,g+x'
+    apt:
+      name: docker-compose
+      state: present
+      update_cache: yes
 
 ## Threatmapper Installation
   - name: Clone Threatmapper repo
     git:
       repo: 'https://github.com/deepfence/ThreatMapper.git'
       dest: /home/ubuntu/threatmapper
+
+  - name: Create and start services
+    docker_compose:
+      project_src: threatmapper/files
+    register: output
