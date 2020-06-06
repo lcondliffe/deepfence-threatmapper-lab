@@ -46,7 +46,7 @@ resource "aws_instance" "deep-lab-ap01" {
       "sudo apt-add-repository --yes --update ppa:ansible/ansible",
       "sudo apt install ansible -y",
       "sudo apt install python-pip -y",
-      #"ansible-playbook setup.yml -b",
+      "ansible-playbook setup.yml -b",
     ]
 
       connection {
