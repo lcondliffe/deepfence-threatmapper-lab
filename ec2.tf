@@ -27,6 +27,24 @@ resource "aws_instance" "deep-lab-ap01" {
     Name = "deep-lab-ap01"
   }
 
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt update",
+      "sudo apt install software-properties-common -y",
+      "sudo apt-add-repository --yes --update ppa:ansible/ansible",
+      "sudo apt install ansible -y",
+      "sudo apt install python-pip -y",
+      #"ansible-playbook setup.yml -b",
+    ]
+
+      connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file(var.ssh_key)
+      host        = self.public_ip
+    }
+  }
+
   provisioner "file"{
     source      = "setup.yml"
     destination = "/home/ubuntu"
@@ -39,21 +57,5 @@ resource "aws_instance" "deep-lab-ap01" {
     }
   }
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt update",
-      "sudo apt install software-properties-common -y",
-      "sudo apt-add-repository --yes --update ppa:ansible/ansible",
-      "sudo apt install ansible -y",
-      "sudo apt install python-pip -y",
-      "ansible-playbook setup.yml -b",
-    ]
-
-      connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = file(var.ssh_key)
-      host        = self.public_ip
-    }
-  }
+  key_name = var.ssh_key_name
 }
