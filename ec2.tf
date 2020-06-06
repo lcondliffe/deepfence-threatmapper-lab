@@ -28,7 +28,7 @@ resource "aws_instance" "deep-lab-ap01" {
   }
 
   provisioner "file"{
-    source      = "./setup.yml"
+    source      = "setup.yml"
     destination = "/home/ubuntu"
 
     connection {
