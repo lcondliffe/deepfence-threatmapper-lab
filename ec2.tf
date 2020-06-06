@@ -28,7 +28,7 @@ resource "aws_instance" "deep-lab-ap01" {
   }
 
   provisioner "file"{
-    source      = "ansible/"
+    source      = "./setup.yml"
     destination = "/home/ubuntu"
 
     connection {
