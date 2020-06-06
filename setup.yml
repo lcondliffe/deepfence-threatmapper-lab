@@ -44,4 +44,4 @@
   - name: Clone Threatmapper repo
     git:
       repo: 'https://github.com/deepfence/ThreatMapper.git'
-      dest: /home/luke/threatmapper
+      dest: /home/ubuntu/threatmapper
