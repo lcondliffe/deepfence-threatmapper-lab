@@ -27,6 +27,18 @@ resource "aws_instance" "deep-lab-ap01" {
     Name = "deep-lab-ap01"
   }
 
+  provisioner "file"{
+    source      = "setup.yml"
+    destination = "/home/ubuntu/setup.yml"
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file(var.ssh_key)
+      host        = self.public_ip
+    }
+  }
+
   provisioner "remote-exec" {
     inline = [
       "sudo apt update",
@@ -38,18 +50,6 @@ resource "aws_instance" "deep-lab-ap01" {
     ]
 
       connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = file(var.ssh_key)
-      host        = self.public_ip
-    }
-  }
-
-  provisioner "file"{
-    source      = "setup.yml"
-    destination = "/home/ubuntu"
-
-    connection {
       type        = "ssh"
       user        = "ubuntu"
       private_key = file(var.ssh_key)
