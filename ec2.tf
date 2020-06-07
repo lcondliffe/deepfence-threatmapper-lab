@@ -18,7 +18,7 @@ data "aws_ami" "ubuntu" {
 # Create Deepfence Management Console Server
 resource "aws_instance" "deep-lab-ap01" {
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = "m5d.large"
+  instance_type               = "m5d.xlarge"
   subnet_id                   = aws_subnet.deepfence-lab-subnet-public.id
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.deepfence-lab-sg.id]
