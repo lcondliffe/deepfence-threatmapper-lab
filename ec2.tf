@@ -27,6 +27,10 @@ resource "aws_instance" "deep-lab-ap01" {
     Name = "deep-lab-ap01"
   }
 
+  root_block_device {
+    volume_size = "100"
+  }
+
   provisioner "file"{
     source      = "setup.yml"
     destination = "/home/ubuntu/setup.yml"
