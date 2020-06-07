@@ -16,6 +16,15 @@ data "aws_ami" "ubuntu" {
 }
 
 # Create Deepfence Management Console Server
+resource "aws_ebs_volume" "deep-lab-ap01" {
+  availability_zone = "eu-west-1a"
+  size              = 100
+
+  tags = {
+    Name = "deep-lab-ap01"
+  }
+}
+
 resource "aws_instance" "deep-lab-ap01" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = "m5d.xlarge"
@@ -58,4 +67,10 @@ resource "aws_instance" "deep-lab-ap01" {
   }
 
   key_name = var.ssh_key_name
+}
+
+resource "aws_volume_attachment" "deep-lab-ap01" {
+  device_name = "/dev/sdh"
+  volume_id   = aws_ebs_volume.deep-lab-ap01.id
+  instance_id = aws_instance.deep-lab-ap01.id
 }
