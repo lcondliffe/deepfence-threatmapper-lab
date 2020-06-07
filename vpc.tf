@@ -48,6 +48,10 @@ resource "aws_route_table_association" "public-subnet-assoc" {
 }
 
 #VPC Security Group
+data "http" "myip" {
+  url = "http://ipv4.icanhazip.com"
+}
+
 resource "aws_security_group" "deepfence-lab-sg" {
   name   = "deepfence-lab-security-group"
   vpc_id = aws_vpc.deepfence-lab-vpc.id
@@ -56,14 +60,14 @@ resource "aws_security_group" "deepfence-lab-sg" {
     protocol    = "tcp"
     from_port   = 22
     to_port     = 22
-    cidr_blocks = ["${chomp(data.http.icanhazip.body)}/32"]
+    cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
   }
 
   ingress {
     protocol    = "tcp"
     from_port   = 443
     to_port     = 443
-    cidr_blocks = ["${chomp(data.http.icanhazip.body)}/32"]
+    cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
   }
 
   ingress {
