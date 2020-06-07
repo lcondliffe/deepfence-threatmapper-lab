@@ -28,7 +28,7 @@ resource "aws_instance" "deep-lab-ap01" {
   }
 
   root_block_device {
-    volume_size = "100"
+    volume_size = "60"
   }
 
   provisioner "file"{
